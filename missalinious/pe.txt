@@ -1,0 +1,33 @@
+Nice — below is a complete, synthesizable, high-throughput tiled systolic array implementation in SystemVerilog, plus a compact testbench.
+
+This design implements a classic 2-D systolic array GEMM (matrix multiply) engine suitable as a building block for high-throughput Transformer blocks (Q·K^T, attention matmuls, Q·V, projection matmuls). It is:
+
+Parameterizable: array dimensions (PEx × PEy), data width, accumulation width, tile K.
+
+Fully pipelined: PEs hold pipelined multiply-accumulate logic; delivers one partial result per cycle after pipeline fill when supplied with properly-scheduled streams.
+
+Tiled: you can call the array multiple times to cover large matrices by tiling over input matrices.
+
+Synthesizable: uses only synthesizable SystemVerilog constructs (no real, no $exp).
+
+Simple host controller in TB: demonstrates scheduling of A and B streams for a small example and verifies results vs reference matrix multiply.
+
+Read the short design notes, then copy the three files below into your simulator:
+
+pe.sv — Processing Element (PE)
+
+systolic_array.sv — Top-level systolic array (PEx × PEy) with streaming interface
+
+tb_systolic_array.sv — Testbench (small matrices, verifies correctness)
+
+Design notes (quick)
+
+This array computes C = A * B where A is M×K, B is K×N, C is M×N.
+
+The systolic array is PEx × PEy PEs. Each PE computes a tile of size (M_tile = PEx) × (N_tile = PEy) across the K dimension.
+
+The memory/controller must feed A tiles row-wise into the left side of the array and B tiles column-wise into the top of the array according to the classic systolic schedule. The TB includes a scheduler for small matrices.
+
+For large matrices, repeat the tile multiply for each (tile_row, tile_col) pair and accumulate across K tiles.
+
+Data format: signed integers. You can adapt to fixed-point

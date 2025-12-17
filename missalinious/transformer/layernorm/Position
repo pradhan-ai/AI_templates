@@ -1,0 +1,14 @@
+Input
+  ↓
+Multi-Head Attention
+  ↓
+Residual Add
+  ↓
+🔥 LayerNorm (THIS MODULE)
+  ↓
+FFN
+  ↓
+Residual Add
+  ↓
+🔥 LayerNorm
+

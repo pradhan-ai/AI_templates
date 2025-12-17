@@ -1,0 +1,58 @@
+🧠 SOFTMAX ARCHITECTURE (HARDWARE STYLE)
+
+We implement stable softmax:
+
+softmax
+(
+𝑥
+𝑖
+)
+=
+2
+𝑥
+𝑖
+−
+max
+⁡
+(
+𝑥
+)
+∑
+𝑗
+2
+𝑥
+𝑗
+−
+max
+⁡
+(
+𝑥
+)
+softmax(x
+i
+	​
+
+)=
+∑
+j
+	​
+
+2
+x
+j
+	​
+
+−max(x)
+2
+x
+i
+	​
+
+−max(x)
+	​
+
+Why base-2?
+
+✔ Shifts instead of expensive exp
+✔ Exact in fixed-point
+✔ Very common in accelerators
